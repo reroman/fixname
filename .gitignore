@@ -1,0 +1,4 @@
+*.o
+fixname
+*.swp
+*.swo
