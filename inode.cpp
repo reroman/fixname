@@ -18,6 +18,55 @@ extern int errno;
 iNode::iNode( std::string path ) 
 	throw( runtime_error )
 {
+	settingPathsHelper( path );
+}
+
+bool iNode::isDirectory() const
+{
+	return directory;
+}
+
+std::string iNode::getName() const
+{
+	return name;
+}
+
+std::string iNode::getParent() const
+{
+	return parent;
+}
+
+std::string iNode::getAbsolutePath() const
+{
+	if( name == DIR_ROOT )
+		return name;
+	else if( parent == DIR_ROOT )
+		return parent + name;
+	return parent + DIR_ROOT + name;
+}
+
+bool iNode::rename( std::string newName, bool overwrite ) 
+	throw( runtime_error )
+{
+	if( !exists(newName) || overwrite ){
+		if( !::rename( getAbsolutePath().c_str(), newName.c_str() ) ){
+			settingPathsHelper( newName );
+			return true;
+		}
+		else
+			throw runtime_error( "rename(): " + string( strerror(errno) ) );
+	}
+	return false;
+}
+
+bool iNode::exists( std::string path )
+{
+	return access( path.c_str(), F_OK ) == 0;
+}
+
+
+void iNode::settingPathsHelper( std::string path )
+{
 	size_t n;
 	struct stat fileInfo;
 	char c_path[PATH_MAX];
@@ -62,53 +111,3 @@ iNode::iNode( std::string path )
 		directory = static_cast<bool>( S_ISDIR(fileInfo.st_mode) );
 	}
 }
-
-bool iNode::isDirectory() const
-{
-	return directory;
-}
-
-std::string iNode::getName() const
-{
-	return name;
-}
-
-std::string iNode::getParent() const
-{
-	return parent;
-}
-
-std::string iNode::getAbsolutePath() const
-{
-	if( name == DIR_ROOT )
-		return name;
-	else if( parent == DIR_ROOT )
-		return parent + name;
-	return parent + DIR_ROOT + name;
-}
-
-bool iNode::rename( std::string newName, bool overwrite ) 
-	throw( runtime_error )
-{
-	char auxPath1[PATH_MAX];
-	char auxPath2[PATH_MAX];
-
-	if( !exists(newName) || overwrite ){
-		if( !::rename( getAbsolutePath().c_str(), newName.c_str() ) ){
-			realpath( newName.c_str(), auxPath1 );
-			strcpy( auxPath2, auxPath1 );
-			name = std::string( basename(auxPath1) );
-			parent = std::string( dirname(auxPath2) );
-			return true;
-		}
-		else
-			throw runtime_error( "rename(): " + string( strerror(errno) ) );
-	}
-	return false;
-}
-
-bool iNode::exists( std::string path )
-{
-	return access( path.c_str(), F_OK ) == 0;
-}
-

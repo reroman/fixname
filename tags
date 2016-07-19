@@ -17,6 +17,9 @@ Directory::getChildren	directory.hpp	/^	std::list<iNode> getChildren( bool all =
 Directory::isDirectory	directory.cpp	/^bool Directory::isDirectory( std::string path )$/;"	f	class:Directory	signature:( std::string path )
 Directory::isDirectory	directory.hpp	/^	static bool isDirectory( std::string path );$/;"	p	class:Directory	access:public	signature:( std::string path )
 INODE_HPP	inode.hpp	2;"	d
+O	main.o	/^ELF/;"	v
+V2	fixname	/^ÜQ/;"	v
+VX	fixname	/^ÊQ/;"	v
 directory	inode.hpp	/^	bool directory;$/;"	m	class:iNode	access:private
 exists	inode.cpp	/^bool iNode::exists( std::string path )$/;"	f	class:iNode	signature:( std::string path )
 exists	inode.hpp	/^	static bool exists( std::string path );$/;"	p	class:iNode	access:public	signature:( std::string path )
@@ -46,14 +49,22 @@ iNode::isDirectory	inode.cpp	/^bool iNode::isDirectory() const$/;"	f	class:iNode
 iNode::isDirectory	inode.hpp	/^	bool isDirectory() const;$/;"	p	class:iNode	access:public	signature:() const
 iNode::name	inode.hpp	/^	std::string name;$/;"	m	class:iNode	access:private
 iNode::parent	inode.hpp	/^	std::string parent;$/;"	m	class:iNode	access:private
-iNode::rename	inode.cpp	/^	bool iNode::rename( std::string newName, bool overwrite ) $/;"	f	class:iNode	signature:( std::string newName, bool overwrite )
+iNode::rename	inode.cpp	/^bool iNode::rename( std::string newName, bool overwrite ) $/;"	f	class:iNode	signature:( std::string newName, bool overwrite )
 iNode::rename	inode.hpp	/^	bool rename( std::string newName, bool overwrite = false )$/;"	p	class:iNode	access:public	signature:( std::string newName, bool overwrite = false )
+iNode::settingPathsHelper	inode.cpp	/^void iNode::settingPathsHelper( std::string path )$/;"	f	class:iNode	signature:( std::string path )
+iNode::settingPathsHelper	inode.hpp	/^	void settingPathsHelper( std::string path );$/;"	p	class:iNode	access:private	signature:( std::string path )
 isDirectory	directory.cpp	/^bool Directory::isDirectory( std::string path )$/;"	f	class:Directory	signature:( std::string path )
 isDirectory	directory.hpp	/^	static bool isDirectory( std::string path );$/;"	p	class:Directory	access:public	signature:( std::string path )
 isDirectory	inode.cpp	/^bool iNode::isDirectory() const$/;"	f	class:iNode	signature:() const
 isDirectory	inode.hpp	/^	bool isDirectory() const;$/;"	p	class:iNode	access:public	signature:() const
+m	fixname	/^±Q/;"	v
 main	main.cpp	/^int main( int argc, char **argv )$/;"	f	signature:( int argc, char **argv )
+n	fixname	/^n:/;"	v
 name	inode.hpp	/^	std::string name;$/;"	m	class:iNode	access:private
 parent	inode.hpp	/^	std::string parent;$/;"	m	class:iNode	access:private
-rename	inode.cpp	/^	bool iNode::rename( std::string newName, bool overwrite ) $/;"	f	class:iNode	signature:( std::string newName, bool overwrite )
+rename	inode.cpp	/^bool iNode::rename( std::string newName, bool overwrite ) $/;"	f	class:iNode	signature:( std::string newName, bool overwrite )
 rename	inode.hpp	/^	bool rename( std::string newName, bool overwrite = false )$/;"	p	class:iNode	access:public	signature:( std::string newName, bool overwrite = false )
+settingPathsHelper	inode.cpp	/^void iNode::settingPathsHelper( std::string path )$/;"	f	class:iNode	signature:( std::string path )
+settingPathsHelper	inode.hpp	/^	void settingPathsHelper( std::string path );$/;"	p	class:iNode	access:private	signature:( std::string path )
+z	fixname	/^ž:/;"	v
+z	fixname	/^ÊQ/;"	v
