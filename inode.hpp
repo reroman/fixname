@@ -24,6 +24,8 @@ public:
 	static bool exists( std::string path );
 
 private:
+
+
 	std::string name;
 	std::string parent;
 	bool directory;

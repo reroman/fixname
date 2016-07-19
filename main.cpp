@@ -1,27 +1,32 @@
 #include <iostream>
-#include "directory.hpp"
+#include "inode.hpp"
 using namespace std;
 
 int main( int argc, char **argv )
 {
-	if( argc != 2 ){
+	if( argc != 3 ){
 		cerr << "Uso:\n\t" << *argv << " <path>\n";
 		return -1;
 	}
 
 	try{
+		iNode node( argv[1] );
+		cout << "Name: " << node.getName()
+			<< "\nDirectory: " << boolalpha << node.isDirectory()
+			<< "\nParent: " << node.getParent()
+			<< "\nAbsolute: " << node.getAbsolutePath() << endl;
 
-		Directory d( argv[1] );
+		if( node.rename( argv[2] ) )
+			cout << "Exitoso" << endl;
+		else
+			cout << "Falló" << endl;
 
-		cout << "Name: " << d.getName()
-			<< "\nDirectory: " << boolalpha << ((iNode)d).isDirectory()
-			<< "\nParent: " << d.getParent()
-			<< "\nAbsolute: " << d.getAbsolutePath() << endl;
+		cout << "Name: " << node.getName()
+			<< "\nDirectory: " << boolalpha << node.isDirectory()
+			<< "\nParent: " << node.getParent()
+			<< "\nAbsolute: " << node.getAbsolutePath() << endl;
 
-		cout << "Children:\n";
-		for( auto &i : d.getChildren() ){
-				cout << i.getAbsolutePath() << '\n';
-		}
+
 	}
 	catch( std::invalid_argument e ){
 		cerr << e.what() << endl;

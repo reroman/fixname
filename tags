@@ -4,29 +4,32 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+CHAR_SEPARATOR	inode.hpp	8;"	d
 DIRECTORY_H	directory.hpp	2;"	d
-Directory	directory.cpp	/^Directory::Directory( const char *path )$/;"	f	class:Directory	signature:( const char *path )
-Directory	directory.hpp	/^	Directory( const char *path ) $/;"	p	class:Directory	access:public	signature:( const char *path )
-Directory	directory.hpp	/^class Directory : iNode$/;"	c	inherits:iNode
-Directory::Directory	directory.cpp	/^Directory::Directory( const char *path )$/;"	f	class:Directory	signature:( const char *path )
-Directory::Directory	directory.hpp	/^	Directory( const char *path ) $/;"	p	class:Directory	access:public	signature:( const char *path )
-Directory::getChildren	directory.hpp	/^	std::list<iNode> getChildren() const;$/;"	p	class:Directory	access:public	signature:() const
+DIR_ROOT	inode.hpp	7;"	d
+Directory	directory.cpp	/^Directory::Directory( std::string path ) $/;"	f	class:Directory	signature:( std::string path )
+Directory	directory.hpp	/^	Directory( std::string path ) $/;"	p	class:Directory	access:public	signature:( std::string path )
+Directory	directory.hpp	/^class Directory : public iNode$/;"	c	inherits:iNode
+Directory::Directory	directory.cpp	/^Directory::Directory( std::string path ) $/;"	f	class:Directory	signature:( std::string path )
+Directory::Directory	directory.hpp	/^	Directory( std::string path ) $/;"	p	class:Directory	access:public	signature:( std::string path )
+Directory::getChildren	directory.cpp	/^std::list<iNode> Directory::getChildren( bool all ) const$/;"	f	class:Directory	signature:( bool all ) const
+Directory::getChildren	directory.hpp	/^	std::list<iNode> getChildren( bool all = false ) const;$/;"	p	class:Directory	access:public	signature:( bool all = false ) const
+Directory::isDirectory	directory.cpp	/^bool Directory::isDirectory( std::string path )$/;"	f	class:Directory	signature:( std::string path )
 Directory::isDirectory	directory.hpp	/^	static bool isDirectory( std::string path );$/;"	p	class:Directory	access:public	signature:( std::string path )
 INODE_HPP	inode.hpp	2;"	d
-P	fixname	/^ELF/;"	v
 directory	inode.hpp	/^	bool directory;$/;"	m	class:iNode	access:private
 exists	inode.cpp	/^bool iNode::exists( std::string path )$/;"	f	class:iNode	signature:( std::string path )
 exists	inode.hpp	/^	static bool exists( std::string path );$/;"	p	class:iNode	access:public	signature:( std::string path )
 getAbsolutePath	inode.cpp	/^std::string iNode::getAbsolutePath() const$/;"	f	class:iNode	signature:() const
 getAbsolutePath	inode.hpp	/^	std::string getAbsolutePath() const;$/;"	p	class:iNode	access:public	signature:() const
-getChildren	directory.cpp	/^std::list<iNode> getChildren() const$/;"	f	signature:() const
-getChildren	directory.hpp	/^	std::list<iNode> getChildren() const;$/;"	p	class:Directory	access:public	signature:() const
+getChildren	directory.cpp	/^std::list<iNode> Directory::getChildren( bool all ) const$/;"	f	class:Directory	signature:( bool all ) const
+getChildren	directory.hpp	/^	std::list<iNode> getChildren( bool all = false ) const;$/;"	p	class:Directory	access:public	signature:( bool all = false ) const
 getName	inode.cpp	/^std::string iNode::getName() const$/;"	f	class:iNode	signature:() const
 getName	inode.hpp	/^	std::string getName() const;$/;"	p	class:iNode	access:public	signature:() const
 getParent	inode.cpp	/^std::string iNode::getParent() const$/;"	f	class:iNode	signature:() const
 getParent	inode.hpp	/^	std::string getParent() const;$/;"	p	class:iNode	access:public	signature:() const
-iNode	inode.cpp	/^iNode::iNode( const char *path ) throw( runtime_error )$/;"	f	class:iNode	signature:( const char *path )
-iNode	inode.hpp	/^	iNode( const char *path )$/;"	p	class:iNode	access:public	signature:( const char *path )
+iNode	inode.cpp	/^iNode::iNode( std::string path ) $/;"	f	class:iNode	signature:( std::string path )
+iNode	inode.hpp	/^	iNode( std::string path )$/;"	p	class:iNode	access:public	signature:( std::string path )
 iNode	inode.hpp	/^class iNode$/;"	c
 iNode::directory	inode.hpp	/^	bool directory;$/;"	m	class:iNode	access:private
 iNode::exists	inode.cpp	/^bool iNode::exists( std::string path )$/;"	f	class:iNode	signature:( std::string path )
@@ -37,20 +40,20 @@ iNode::getName	inode.cpp	/^std::string iNode::getName() const$/;"	f	class:iNode	
 iNode::getName	inode.hpp	/^	std::string getName() const;$/;"	p	class:iNode	access:public	signature:() const
 iNode::getParent	inode.cpp	/^std::string iNode::getParent() const$/;"	f	class:iNode	signature:() const
 iNode::getParent	inode.hpp	/^	std::string getParent() const;$/;"	p	class:iNode	access:public	signature:() const
-iNode::iNode	inode.cpp	/^iNode::iNode( const char *path ) throw( runtime_error )$/;"	f	class:iNode	signature:( const char *path )
-iNode::iNode	inode.hpp	/^	iNode( const char *path )$/;"	p	class:iNode	access:public	signature:( const char *path )
+iNode::iNode	inode.cpp	/^iNode::iNode( std::string path ) $/;"	f	class:iNode	signature:( std::string path )
+iNode::iNode	inode.hpp	/^	iNode( std::string path )$/;"	p	class:iNode	access:public	signature:( std::string path )
 iNode::isDirectory	inode.cpp	/^bool iNode::isDirectory() const$/;"	f	class:iNode	signature:() const
 iNode::isDirectory	inode.hpp	/^	bool isDirectory() const;$/;"	p	class:iNode	access:public	signature:() const
 iNode::name	inode.hpp	/^	std::string name;$/;"	m	class:iNode	access:private
 iNode::parent	inode.hpp	/^	std::string parent;$/;"	m	class:iNode	access:private
-iNode::rename	inode.cpp	/^bool iNode::rename( std::string newName, bool overwrite ) $/;"	f	class:iNode	signature:( std::string newName, bool overwrite )
+iNode::rename	inode.cpp	/^	bool iNode::rename( std::string newName, bool overwrite ) $/;"	f	class:iNode	signature:( std::string newName, bool overwrite )
 iNode::rename	inode.hpp	/^	bool rename( std::string newName, bool overwrite = false )$/;"	p	class:iNode	access:public	signature:( std::string newName, bool overwrite = false )
+isDirectory	directory.cpp	/^bool Directory::isDirectory( std::string path )$/;"	f	class:Directory	signature:( std::string path )
 isDirectory	directory.hpp	/^	static bool isDirectory( std::string path );$/;"	p	class:Directory	access:public	signature:( std::string path )
 isDirectory	inode.cpp	/^bool iNode::isDirectory() const$/;"	f	class:iNode	signature:() const
 isDirectory	inode.hpp	/^	bool isDirectory() const;$/;"	p	class:iNode	access:public	signature:() const
-main	dir.c	/^int main( int argc, char **argv )$/;"	f	signature:( int argc, char **argv )
 main	main.cpp	/^int main( int argc, char **argv )$/;"	f	signature:( int argc, char **argv )
 name	inode.hpp	/^	std::string name;$/;"	m	class:iNode	access:private
 parent	inode.hpp	/^	std::string parent;$/;"	m	class:iNode	access:private
-rename	inode.cpp	/^bool iNode::rename( std::string newName, bool overwrite ) $/;"	f	class:iNode	signature:( std::string newName, bool overwrite )
+rename	inode.cpp	/^	bool iNode::rename( std::string newName, bool overwrite ) $/;"	f	class:iNode	signature:( std::string newName, bool overwrite )
 rename	inode.hpp	/^	bool rename( std::string newName, bool overwrite = false )$/;"	p	class:iNode	access:public	signature:( std::string newName, bool overwrite = false )

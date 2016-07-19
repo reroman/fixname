@@ -22,42 +22,44 @@ iNode::iNode( std::string path )
 	struct stat fileInfo;
 	char c_path[PATH_MAX];
 
+	if( lstat( path.c_str(), &fileInfo ) < 0 )
+		throw runtime_error( path + ": " + string(strerror(errno)) );
+
+	getcwd( c_path, PATH_MAX );
+	
 	if( path == DIR_ROOT ){
 		name = DIR_ROOT;
 		parent = "";
 		directory = true;
 	}
-	else{
-		if( stat( path.c_str(), &fileInfo ) < 0 )
-			throw runtime_error( path + ": " + string(strerror(errno)) );
-		
-		getcwd( c_path, PATH_MAX );
-
-		if( S_ISDIR(fileInfo.st_mode) ){
-			directory = true;
-			if( *path.rbegin() == CHAR_SEPARATOR )
-				path.pop_back();
-			else if( path == "." )
-				path = string( c_path );
-		}
-		else 
-			directory = false;
-
+	else if( S_ISLNK(fileInfo.st_mode) ){
 		n = path.find_last_of( CHAR_SEPARATOR );
-		if( n != string::npos ){
-			name = path.substr( n + 1 );
-			path.erase( n + 1 );
-		}
-		else
+		if( n == string::npos ){
 			name = path;
-		
-		if( path[0] == CHAR_SEPARATOR )
-			parent = path.substr( 0, n );
+			parent = string( c_path );
+		}
 		else{
-			parent = string( c_path ) + path;
+			name = path.substr( n + 1 );
+			path.erase( n );
+			if( path == "" )
+				parent = DIR_ROOT;
+			else if( path[0] == CHAR_SEPARATOR )
+				parent = path;
+			else
+				parent = string( c_path ) + "/" + path;
 			realpath( parent.c_str(), c_path );
 			parent = string( c_path );
 		}
+		directory = false;
+	}
+	else{
+		realpath( path.c_str(), c_path );
+		path = string( c_path );
+		n = path.find_last_of( CHAR_SEPARATOR );
+		name = path.substr( n + 1 );
+		path.erase( n );
+		parent = path;
+		directory = static_cast<bool>( S_ISDIR(fileInfo.st_mode) );
 	}
 }
 
@@ -85,8 +87,8 @@ std::string iNode::getAbsolutePath() const
 	return parent + DIR_ROOT + name;
 }
 
-	bool iNode::rename( std::string newName, bool overwrite ) 
-throw( runtime_error )
+bool iNode::rename( std::string newName, bool overwrite ) 
+	throw( runtime_error )
 {
 	char auxPath1[PATH_MAX];
 	char auxPath2[PATH_MAX];
@@ -109,3 +111,4 @@ bool iNode::exists( std::string path )
 {
 	return access( path.c_str(), F_OK ) == 0;
 }
+
