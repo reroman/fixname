@@ -17,6 +17,7 @@ public:
 	std::string getName() const;
 	std::string getParent() const;
 	std::string getAbsolutePath() const;
+	std::string getRelativePath() const;
 	
 	bool rename( std::string newName, bool overwrite = false )
 		throw( std::runtime_error );

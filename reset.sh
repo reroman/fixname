@@ -10,3 +10,5 @@ echo jajaja > "pruebas 1/carpeta 2/otro nivel/archivo de texto.txt"
 mkdir pruebas_1
 echo jejeje > "pruebas 1/carpeta_2"
 echo jijiji > "pruebas 1/.otro archivo.txt"
+ln -s $0 "pruebas 1/enlace con espacios.sh"
+mkdir -p "pruebas 1/.carpeta escondida jajaja"

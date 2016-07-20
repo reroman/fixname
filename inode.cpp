@@ -45,6 +45,37 @@ std::string iNode::getAbsolutePath() const
 	return parent + DIR_ROOT + name;
 }
 
+std::string iNode::getRelativePath() const
+{
+	char c_cwd[PATH_MAX];
+	string cwd( getcwd( c_cwd, PATH_MAX ) );
+	string absPath = getAbsolutePath();
+	string result;
+	size_t n;
+
+	if( absPath[0] != '/' )
+		return "";
+	if( *absPath.rbegin() == '/' )
+		absPath.pop_back();
+	
+	if( cwd == absPath )
+		return ".";
+
+	if( cwd == "/" )
+		return absPath.substr( 1, string::npos );
+
+	while( absPath.find( cwd ) == string::npos && cwd != ""  ){
+		result.append( "../" );
+		n = cwd.find_last_of( '/' );
+		cwd.erase( n );
+	}
+	if( cwd == "" )
+		result.append( absPath, 1, string::npos );
+	else
+		result.append( absPath, cwd.length() + 1, string::npos );
+	return result;
+}	
+
 bool iNode::rename( std::string newName, bool overwrite ) 
 	throw( runtime_error )
 {
@@ -63,7 +94,6 @@ bool iNode::exists( std::string path )
 {
 	return access( path.c_str(), F_OK ) == 0;
 }
-
 
 void iNode::settingPathsHelper( std::string path )
 {
@@ -107,7 +137,14 @@ void iNode::settingPathsHelper( std::string path )
 		n = path.find_last_of( CHAR_SEPARATOR );
 		name = path.substr( n + 1 );
 		path.erase( n );
-		parent = path;
+		if( name == "" ){
+			name = DIR_ROOT;
+			parent = "";
+		}
+		else if( path == "" )
+			parent = DIR_ROOT;
+		else
+			parent = path;
 		directory = static_cast<bool>( S_ISDIR(fileInfo.st_mode) );
 	}
 }
