@@ -25,7 +25,7 @@ public:
 	static bool exists( std::string path );
 
 private:
-	void settingPathsHelper( std::string path );
+	void setterPathsHelper( std::string path );
 
 	std::string name;
 	std::string parent;

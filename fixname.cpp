@@ -8,8 +8,21 @@ using std::invalid_argument;
 using std::runtime_error;
 using std::string;
 
+
+
 namespace fixname
 {
+	Statistics FixName::stats = { 0, 0, 0, 0, 0 };
+
+	inline string setColor( string text, string colorAnsi ){
+		return colorAnsi + text + COLOR_NORMAL;
+	}
+
+	Statistics FixName::getStatistics()
+	{
+		return stats;
+	}
+
 	FixName::FixName( std::string path, Flags flag )
 		throw( std::invalid_argument, std::runtime_error )
 		: flags( flag )
@@ -24,12 +37,6 @@ namespace fixname
 			mainNode = new Directory( path );
 		else
 			mainNode = new iNode( path );
-
-		stats.totalFiles = 0;
-		stats.filesOk = 0;
-		stats.filesRenamed = 0;
-		stats.filesIgnored = 0;
-		stats.filesError = 0;
 	}
 
 	FixName::~FixName(){
@@ -65,13 +72,13 @@ namespace fixname
 		bool exists;
 
 		stats.totalFiles++;
-		
+
 		if( newName == "" ){
-			verbose( "'" + node.getRelativePath() + "' (Ok)\n" );
+			verbose( "'" + node.getRelativePath() + "':\n\t" + setColor("Ok", COLOR_CYAN) + "\n" );
 			stats.filesOk++;
 			return;
 		}
-		
+
 		oldPath = newPath = node.getRelativePath();
 		n = newPath.find_last_of( CHAR_SEPARATOR );
 		newPath.replace( n + 1, string::npos, newName );
@@ -79,37 +86,37 @@ namespace fixname
 
 		if( exists && ((flags & FLG_IGNORE)) ){
 			stats.filesIgnored++;
-			verbose( "'" + node.getRelativePath() + "' (Ignorado)\n" );
+			verbose( "'" + node.getRelativePath() + "':\n\t" + setColor("Ignorado", COLOR_YELLOW) + "\n" );
 		}
 		else if( !exists || flags & FLG_FORCE ){
 			try{
 				node.rename( newPath, true );
 				stats.filesRenamed++;
-				verbose( "'" + oldPath + "' (Renombrado): '" 
-						+ newName + "'\n" );
+				verbose( "'" + oldPath + "':\n\t" + setColor("Renombrado", COLOR_GREEN) + ": '" 
+						+ newName + "'\n", true );
 			}
 			catch( runtime_error e ){
 				stats.filesError++;
 				verbose( "'" + oldPath + "' -> '" + newName + 
-						"' (Error): " + e.what() + "\n", true );
+						"':\n\t" + setColor("Error", COLOR_RED) + ": " + e.what() + "\n", true );
 			}
 		}
 		else if( promptFile( newPath ) ){
 			try{
 				node.rename( newPath, true );
 				stats.filesRenamed++;
-				verbose( "'" + oldPath + "' (Renombrado): '" 
-						+ newName + "'\n" );
+				verbose( "'" + oldPath + "':\n\t" + setColor("Renombrado", COLOR_GREEN) + ": '" 
+						+ newName + "'\n", true );
 			}
 			catch( runtime_error e ){
 				stats.filesError++;
 				verbose( "'" + oldPath + "' -> '" + newName + 
-						"' (Error): " + e.what() + "\n", true );
+						"':\n\t" + setColor( "Error", COLOR_RED) + ": " + e.what() + "\n", true );
 			}
 		}
 		else{
 			stats.filesIgnored++;
-			verbose( "'" + oldPath + "' (Ignorado)\n" );
+			verbose( "'" + oldPath + "':\n\t" + setColor("Ignorado", COLOR_YELLOW) + "\n" );
 		}
 	}
 
@@ -118,13 +125,13 @@ namespace fixname
 	{
 		bool ok = true;
 		string fix;
-		static const string badChars( "#<$+%>!`&*‘|{?}/\\@" );
+		static const string badChars( "#<$+%>!`&*‘|{?}@" );
 
 		fix.reserve( fileName.length() );
 		for( char &c : fileName )
 			if( badChars.find_last_of( c ) != string::npos )
 				ok = false;
-			else if( c == ' ' ){
+			else if( c == ' ' || c == '/' || c == '\\' ){
 				ok = false;
 				fix.push_back( '_' );
 			}

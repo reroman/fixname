@@ -4,8 +4,12 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
-B	fixname	/^$/;"	v
 CHAR_SEPARATOR	inode.hpp	8;"	d
+COLOR_CYAN	fixname.hpp	19;"	d
+COLOR_GREEN	fixname.hpp	17;"	d
+COLOR_NORMAL	fixname.hpp	20;"	d
+COLOR_RED	fixname.hpp	16;"	d
+COLOR_YELLOW	fixname.hpp	18;"	d
 DIRECTORY_H	directory.hpp	2;"	d
 DIR_ROOT	inode.hpp	7;"	d
 Directory	directory.cpp	/^Directory::Directory( std::string path ) $/;"	f	class:Directory	signature:( std::string path )
@@ -28,13 +32,8 @@ FixName	fixname.cpp	/^	FixName::FixName( std::string path, Flags flag )$/;"	f	cl
 FixName	fixname.hpp	/^		FixName( std::string path, Flags flag )$/;"	p	class:fixname::FixName	access:public	signature:( std::string path, Flags flag )
 FixName	fixname.hpp	/^	class FixName$/;"	c	namespace:fixname
 Flags	fixname.hpp	/^	typedef int Flags;$/;"	t	namespace:fixname
-G	directory.o	/^f/;"	v
 INODE_HPP	inode.hpp	2;"	d
 Statistics	fixname.hpp	/^	struct Statistics{$/;"	s	namespace:fixname
-U	fixname.o	/^/;"	v
-_	directory.o	/^\\/;"	v
-_x	directory.o	/^ÜE/;"	v
-c	fixname.o	/^/;"	v
 directory	inode.hpp	/^	bool directory;$/;"	m	class:iNode	access:private
 exists	inode.cpp	/^bool iNode::exists( std::string path )$/;"	f	class:iNode	signature:( std::string path )
 exists	inode.hpp	/^	static bool exists( std::string path );$/;"	p	class:iNode	access:public	signature:( std::string path )
@@ -56,6 +55,8 @@ fixname::FixName::fix	fixname.hpp	/^		Statistics fix();$/;"	p	class:fixname::Fix
 fixname::FixName::fixiNode	fixname.cpp	/^	void FixName::fixiNode( iNode &node )$/;"	f	class:fixname::FixName	signature:( iNode &node )
 fixname::FixName::fixiNode	fixname.hpp	/^		void fixiNode( iNode &node );$/;"	p	class:fixname::FixName	access:private	signature:( iNode &node )
 fixname::FixName::flags	fixname.hpp	/^		Flags flags;$/;"	m	class:fixname::FixName	access:private
+fixname::FixName::getStatistics	fixname.cpp	/^	Statistics FixName::getStatistics()$/;"	f	class:fixname::FixName	signature:()
+fixname::FixName::getStatistics	fixname.hpp	/^		static Statistics getStatistics();$/;"	p	class:fixname::FixName	access:public	signature:()
 fixname::FixName::getValidName	fixname.cpp	/^	string FixName::getValidName( std::string fileName )$/;"	f	class:fixname::FixName	signature:( std::string fileName )
 fixname::FixName::getValidName	fixname.hpp	/^		std::string getValidName( std::string fileName );$/;"	p	class:fixname::FixName	access:private	signature:( std::string fileName )
 fixname::FixName::mainNode	fixname.hpp	/^		iNode *mainNode;$/;"	m	class:fixname::FixName	access:private
@@ -63,9 +64,11 @@ fixname::FixName::promptFile	fixname.cpp	/^	bool FixName::promptFile( std::strin
 fixname::FixName::promptFile	fixname.hpp	/^		bool promptFile( std::string fileName );$/;"	p	class:fixname::FixName	access:private	signature:( std::string fileName )
 fixname::FixName::scanDir	fixname.cpp	/^	void FixName::scanDir( Directory &d )$/;"	f	class:fixname::FixName	signature:( Directory &d )
 fixname::FixName::scanDir	fixname.hpp	/^		void scanDir( Directory &d );$/;"	p	class:fixname::FixName	access:private	signature:( Directory &d )
-fixname::FixName::stats	fixname.hpp	/^		Statistics stats;$/;"	m	class:fixname::FixName	access:private
+fixname::FixName::stats	fixname.cpp	/^	Statistics FixName::stats = { 0, 0, 0, 0, 0 };$/;"	m	class:fixname::FixName	file:
+fixname::FixName::stats	fixname.hpp	/^		static Statistics stats;$/;"	m	class:fixname::FixName	access:private
 fixname::FixName::verbose	fixname.cpp	/^	void FixName::verbose( std::string text, bool error )$/;"	f	class:fixname::FixName	signature:( std::string text, bool error )
 fixname::FixName::verbose	fixname.hpp	/^		void verbose( std::string text, bool error = false );$/;"	p	class:fixname::FixName	access:private	signature:( std::string text, bool error = false )
+fixname::FixName::~FixName	fixname.cpp	/^	FixName::~FixName(){$/;"	f	class:fixname::FixName	signature:()
 fixname::FixName::~FixName	fixname.hpp	/^		~FixName();$/;"	p	class:fixname::FixName	access:public	signature:()
 fixname::Flags	fixname.hpp	/^	typedef int Flags;$/;"	t	namespace:fixname
 fixname::Statistics	fixname.hpp	/^	struct Statistics{$/;"	s	namespace:fixname
@@ -74,6 +77,8 @@ fixname::Statistics::filesIgnored	fixname.hpp	/^		int filesIgnored;$/;"	m	struct
 fixname::Statistics::filesOk	fixname.hpp	/^		int filesOk;$/;"	m	struct:fixname::Statistics	access:public
 fixname::Statistics::filesRenamed	fixname.hpp	/^		int filesRenamed;$/;"	m	struct:fixname::Statistics	access:public
 fixname::Statistics::totalFiles	fixname.hpp	/^		int totalFiles;$/;"	m	struct:fixname::Statistics	access:public
+fixname::setColor	fixname.cpp	/^	inline string setColor( string text, string colorAnsi ){$/;"	f	namespace:fixname	signature:( string text, string colorAnsi )
+fixname::setColor	fixname.hpp	/^	std::string setColor( std::string text, std::string ansiColor );$/;"	p	namespace:fixname	signature:( std::string text, std::string ansiColor )
 flags	fixname.hpp	/^		Flags flags;$/;"	m	class:fixname::FixName	access:private
 getAbsolutePath	inode.cpp	/^std::string iNode::getAbsolutePath() const$/;"	f	class:iNode	signature:() const
 getAbsolutePath	inode.hpp	/^	std::string getAbsolutePath() const;$/;"	p	class:iNode	access:public	signature:() const
@@ -85,9 +90,10 @@ getParent	inode.cpp	/^std::string iNode::getParent() const$/;"	f	class:iNode	sig
 getParent	inode.hpp	/^	std::string getParent() const;$/;"	p	class:iNode	access:public	signature:() const
 getRelativePath	inode.cpp	/^std::string iNode::getRelativePath() const$/;"	f	class:iNode	signature:() const
 getRelativePath	inode.hpp	/^	std::string getRelativePath() const;$/;"	p	class:iNode	access:public	signature:() const
+getStatistics	fixname.cpp	/^	Statistics FixName::getStatistics()$/;"	f	class:fixname::FixName	signature:()
+getStatistics	fixname.hpp	/^		static Statistics getStatistics();$/;"	p	class:fixname::FixName	access:public	signature:()
 getValidName	fixname.cpp	/^	string FixName::getValidName( std::string fileName )$/;"	f	class:fixname::FixName	signature:( std::string fileName )
 getValidName	fixname.hpp	/^		std::string getValidName( std::string fileName );$/;"	p	class:fixname::FixName	access:private	signature:( std::string fileName )
-h	fixname	/^? /;"	v
 iNode	inode.cpp	/^iNode::iNode( std::string path ) $/;"	f	class:iNode	signature:( std::string path )
 iNode	inode.hpp	/^	iNode( std::string path )$/;"	p	class:iNode	access:public	signature:( std::string path )
 iNode	inode.hpp	/^class iNode$/;"	c
@@ -116,23 +122,24 @@ isDirectory	directory.cpp	/^bool Directory::isDirectory( std::string path )$/;"	
 isDirectory	directory.hpp	/^	static bool isDirectory( std::string path );$/;"	p	class:Directory	access:public	signature:( std::string path )
 isDirectory	inode.cpp	/^bool iNode::isDirectory() const$/;"	f	class:iNode	signature:() const
 isDirectory	inode.hpp	/^	bool isDirectory() const;$/;"	p	class:iNode	access:public	signature:() const
-j	directory.o	/^\\/;"	v
 main	main.cpp	/^int main( int argc, char **argv )$/;"	f	signature:( int argc, char **argv )
 mainNode	fixname.hpp	/^		iNode *mainNode;$/;"	m	class:fixname::FixName	access:private
 name	inode.hpp	/^	std::string name;$/;"	m	class:iNode	access:private
 parent	inode.hpp	/^	std::string parent;$/;"	m	class:iNode	access:private
 promptFile	fixname.cpp	/^	bool FixName::promptFile( std::string newName )$/;"	f	class:fixname::FixName	signature:( std::string newName )
 promptFile	fixname.hpp	/^		bool promptFile( std::string fileName );$/;"	p	class:fixname::FixName	access:private	signature:( std::string fileName )
-qn	directory.o	/^n:/;"	v
 rename	inode.cpp	/^bool iNode::rename( std::string newName, bool overwrite ) $/;"	f	class:iNode	signature:( std::string newName, bool overwrite )
 rename	inode.hpp	/^	bool rename( std::string newName, bool overwrite = false )$/;"	p	class:iNode	access:public	signature:( std::string newName, bool overwrite = false )
 scanDir	fixname.cpp	/^	void FixName::scanDir( Directory &d )$/;"	f	class:fixname::FixName	signature:( Directory &d )
 scanDir	fixname.hpp	/^		void scanDir( Directory &d );$/;"	p	class:fixname::FixName	access:private	signature:( Directory &d )
+setColor	fixname.cpp	/^	inline string setColor( string text, string colorAnsi ){$/;"	f	namespace:fixname	signature:( string text, string colorAnsi )
+setColor	fixname.hpp	/^	std::string setColor( std::string text, std::string ansiColor );$/;"	p	namespace:fixname	signature:( std::string text, std::string ansiColor )
 settingPathsHelper	inode.cpp	/^void iNode::settingPathsHelper( std::string path )$/;"	f	class:iNode	signature:( std::string path )
 settingPathsHelper	inode.hpp	/^	void settingPathsHelper( std::string path );$/;"	p	class:iNode	access:private	signature:( std::string path )
-stats	fixname.hpp	/^		Statistics stats;$/;"	m	class:fixname::FixName	access:private
+stats	fixname.cpp	/^	Statistics FixName::stats = { 0, 0, 0, 0, 0 };$/;"	m	class:fixname::FixName	file:
+stats	fixname.hpp	/^		static Statistics stats;$/;"	m	class:fixname::FixName	access:private
 totalFiles	fixname.hpp	/^		int totalFiles;$/;"	m	struct:fixname::Statistics	access:public
-v	fixname.o	/^/;"	v
 verbose	fixname.cpp	/^	void FixName::verbose( std::string text, bool error )$/;"	f	class:fixname::FixName	signature:( std::string text, bool error )
 verbose	fixname.hpp	/^		void verbose( std::string text, bool error = false );$/;"	p	class:fixname::FixName	access:private	signature:( std::string text, bool error = false )
+~FixName	fixname.cpp	/^	FixName::~FixName(){$/;"	f	class:fixname::FixName	signature:()
 ~FixName	fixname.hpp	/^		~FixName();$/;"	p	class:fixname::FixName	access:public	signature:()

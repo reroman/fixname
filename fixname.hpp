@@ -13,6 +13,12 @@
 #define FLG_IGNORE		 16
 #define FLG_VERBOSE		 32
 
+#define COLOR_RED		"\e[31;1m"
+#define COLOR_GREEN		"\e[32;1m"
+#define COLOR_YELLOW	"\e[33;1m"
+#define COLOR_CYAN		"\e[36;1m"
+#define COLOR_NORMAL	"\e[0m"
+
 namespace fixname
 {
 	struct Statistics{
@@ -25,6 +31,8 @@ namespace fixname
 
 	typedef int Flags;
 
+	std::string setColor( std::string text, std::string ansiColor );
+
 	class FixName
 	{
 	public:
@@ -33,6 +41,7 @@ namespace fixname
 		~FixName();
 
 		Statistics fix();
+		static Statistics getStatistics();
 
 	private:
 		void scanDir( Directory &d );
@@ -43,7 +52,7 @@ namespace fixname
 
 		iNode *mainNode;
 		Flags flags;
-		Statistics stats;
+		static Statistics stats;
 	};
 
 } // end of namespace

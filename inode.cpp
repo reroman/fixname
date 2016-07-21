@@ -4,7 +4,6 @@
 #include <cstdio>
 #include <cstring>
 #include <cerrno>
-#include <libgen.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
@@ -18,7 +17,7 @@ extern int errno;
 iNode::iNode( std::string path ) 
 	throw( runtime_error )
 {
-	settingPathsHelper( path );
+	setterPathsHelper( path );
 }
 
 bool iNode::isDirectory() const
@@ -81,7 +80,7 @@ bool iNode::rename( std::string newName, bool overwrite )
 {
 	if( !exists(newName) || overwrite ){
 		if( !::rename( getAbsolutePath().c_str(), newName.c_str() ) ){
-			settingPathsHelper( newName );
+			setterPathsHelper( newName );
 			return true;
 		}
 		else
@@ -95,7 +94,7 @@ bool iNode::exists( std::string path )
 	return access( path.c_str(), F_OK ) == 0;
 }
 
-void iNode::settingPathsHelper( std::string path )
+void iNode::setterPathsHelper( std::string path )
 {
 	size_t n;
 	struct stat fileInfo;
